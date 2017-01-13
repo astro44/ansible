@@ -113,8 +113,9 @@ def _boto3_conn(conn_type=None, resource=None, region=None, endpoint=None, **par
         client = boto3.session.Session(profile_name=profile).client(resource, region_name=region, endpoint_url=endpoint, **params)
         return client
     else:
-        resource = boto3.session.Session(profile_name=profile).resource(resource, region_name=region, endpoint_url=endpoint, **params)
-        client = boto3.session.Session(profile_name=profile).client(resource, region_name=region, endpoint_url=endpoint, **params)
+        resource_tmp = resource
+        resource = boto3.session.Session(profile_name=profile).resource(resource_tmp, region_name=region, endpoint_url=endpoint, **params)
+        client = boto3.session.Session(profile_name=profile).client(resource_tmp, region_name=region, endpoint_url=endpoint, **params)
         return client, resource
 
 boto3_inventory_conn = _boto3_conn
